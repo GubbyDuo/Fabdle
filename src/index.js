@@ -5,11 +5,23 @@ window.onload = doStuff;
 async function doStuff() {
     const cardInput = document.getElementById("cardSelectInput");
     const dropDownOptions = document.getElementsByClassName("datalist-option");
+    const submitButton = document.getElementById("submit-button");
     let data = await getCards();
     let selectedCard = sendData(data);
 
+    submitButton.addEventListener("click", function () {
+        let entryValue = cardInput.value.split(" ").join("-").toLowerCase();
+
+        if (selectedCard.identifier == entryValue) {
+            console.log("correct");
+        } else console.log("no");
+        //the good stuff
+        console.log(selectedCard);
+        console.log(entryValue);
+    });
+
     cardInput.addEventListener("input", function () {
-        console.log(data.data);
+        console.log(selectedCard);
         let inputValue = cardInput.value;
         let valuecounter = 0;
         let color = "";
@@ -27,7 +39,7 @@ async function doStuff() {
                             color = "blue";
                             break;
                     }
-                    cardNameAndColor = data.data[i].name + "-" + color;
+                    cardNameAndColor = data.data[i].name + " " + color;
                 } else {
                     cardNameAndColor = data.data[i].name;
                 }
